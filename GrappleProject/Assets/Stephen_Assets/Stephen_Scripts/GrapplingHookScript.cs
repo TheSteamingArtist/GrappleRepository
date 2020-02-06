@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GrapplingHookScript : MonoBehaviour
 {
+
+    private bool onGround;
+    public Vector3 lookPos;
     public GameObject hook;
     public GameObject hookHolder;
 
@@ -25,7 +28,14 @@ public class GrapplingHookScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (shot)
+        {
+            LineRenderer rope = hook.GetComponent<LineRenderer>();
+            rope.SetPosition(0, hookHolder.transform.position);
+            rope.SetPosition(1, hook.transform.position);
+        }
         //firing hook
+
         if(Input.GetMouseButtonDown(0) && shot == false)
         {
             shot = true;
@@ -42,6 +52,7 @@ public class GrapplingHookScript : MonoBehaviour
             
             if (hookedon == true)
             {
+
                 hook.transform.parent = objHooked.transform;
                 transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * playerTravelSpeed);
                 float distanceToHook = Vector3.Distance(transform.position, hook.transform.position);
@@ -66,3 +77,4 @@ public class GrapplingHookScript : MonoBehaviour
         hookedon = false;
     }
 }
+
