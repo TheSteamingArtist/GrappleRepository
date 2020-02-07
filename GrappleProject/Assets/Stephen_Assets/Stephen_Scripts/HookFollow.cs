@@ -5,18 +5,50 @@ using UnityEngine;
 public class HookFollow : MonoBehaviour
 {
 
+    public Animator hookAnim;
+    [SerializeField] private GameObject hookObj;
+    public bool BackwardArch;
+    public bool BackwardsArchIdle;
     public Vector3 lookPos;
     // Start is called before the first frame update
     void Start()
     {
-        
+        hookObj = GameObject.Find("Hook");
+
+        hookAnim = hookObj.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleRotation();
-        HandleAimingPos();
+        if(Input.GetKey(KeyCode.E))
+        {
+            BackwardArch = true;
+            //Create Coroutine wait 0.5 seconds and then play idle animation for motion
+        }
+        
+        if (BackwardArch == false)
+        {
+            hookAnim.SetBool("HookAnimBool", false);
+        }
+        
+        if (BackwardArch == true)
+        {
+            hookAnim.SetBool("HookAnimBool", true);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            //Stop Coroutine
+            BackwardArch = false;
+
+            if(BackwardArch == false)
+            {
+                hookAnim.SetBool("BacktoIdle", true);
+            }
+            
+        }
+        
     }
 
     void HandleAimingPos()
@@ -39,8 +71,26 @@ public class HookFollow : MonoBehaviour
         directionToLook.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(directionToLook);
 
+
         Debug.Log(lookPos.x + " " + transform.position.x);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15);
+    }
+
+    public void TurnOnE()
+    {
+        hookAnim.SetBool("HookAnimBool", true);
+    }
+    public void TurnOnQ()
+    {
+        hookAnim.SetBool("HookAnimBool", false);
+    }
+    public void BackToIdle()
+    {
+        hookAnim.SetBool("BacktoIdle", true);
+    }
+    public void TurnOffQ()
+    {
+        hookAnim.SetBool("PressQ", false);
     }
 }
