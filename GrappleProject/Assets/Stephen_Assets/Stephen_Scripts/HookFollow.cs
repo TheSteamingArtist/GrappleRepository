@@ -7,7 +7,6 @@ public class HookFollow : MonoBehaviour
 
     public Animator hookAnim;
     [SerializeField] private GameObject hookObj;
-    public bool BackwardArch;
     public bool BackwardsArchIdle;
     public Vector3 lookPos;
     // Start is called before the first frame update
@@ -23,31 +22,22 @@ public class HookFollow : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.E))
         {
-            BackwardArch = true;
-            //Create Coroutine wait 0.5 seconds and then play idle animation for motion
-        }
-        
-        if (BackwardArch == false)
-        {
-            hookAnim.SetBool("HookAnimBool", false);
-        }
-        
-        if (BackwardArch == true)
-        {
             hookAnim.SetBool("HookAnimBool", true);
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            //Stop Coroutine
-            BackwardArch = false;
-
-            if(BackwardArch == false)
-            {
-                hookAnim.SetBool("BacktoIdle", true);
-            }
             
         }
+ 
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            
+            hookAnim.SetBool("HookAnimBool", false);
+       
+            
+        }
+        else if(Input.GetKey(KeyCode.Mouse0))
+        {
+            hookAnim.SetBool("Stop", true);
+        }
+        
         
     }
 
