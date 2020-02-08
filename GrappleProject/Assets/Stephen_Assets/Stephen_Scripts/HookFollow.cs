@@ -23,19 +23,18 @@ public class HookFollow : MonoBehaviour
         if(Input.GetKey(KeyCode.E))
         {
             hookAnim.SetBool("HookAnimBool", true);
-            
+            hookAnim.speed = 1;
         }
  
         else if (Input.GetKey(KeyCode.Q))
         {
-            
             hookAnim.SetBool("HookAnimBool", false);
-       
-            
+            hookAnim.speed = 1;
         }
         else if(Input.GetKey(KeyCode.Mouse0))
         {
-            hookAnim.SetBool("Stop", true);
+
+            hookAnim.speed = 0;
         }
         
         
