@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class HookFollow : MonoBehaviour
 {
+    public Rigidbody rb;
+
+    public Rigidbody hookAmmoRb;
+
+    public bool hasCollided;
+
+    public float lerpSpeed;
+
+    public GameObject hookAmmo;
+
+    public bool turnOnLerp;
+
+    public GameObject Player;
+
+    public GameObject AmmunitionTransform;
+
+    public float hookForce;
 
     public Animator hookAnim;
     [SerializeField] private GameObject hookObj;
@@ -12,6 +29,7 @@ public class HookFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         hookObj = GameObject.Find("Hook");
 
         hookAnim = hookObj.GetComponent<Animator>();
@@ -20,6 +38,8 @@ public class HookFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         if(Input.GetKey(KeyCode.E))
         {
             hookAnim.SetBool("HookAnimBool", true);
@@ -31,13 +51,41 @@ public class HookFollow : MonoBehaviour
             hookAnim.SetBool("HookAnimBool", false);
             hookAnim.speed = 1;
         }
-        else if(Input.GetKey(KeyCode.Mouse0))
+        else if(Input.GetKeyDown(KeyCode.Mouse0))
         {
 
-            hookAnim.speed = 0;
+            if(hookAmmo.transform.parent != null)
+            {
+                hookAnim.speed = 0;
+
+                hookAmmoRb.isKinematic = false;
+
+                hookAmmoRb.AddForce(transform.up * hookForce);
+
+                hookAmmo.transform.parent = null;
+            }
+            else if(hasCollided == true)
+            {
+                turnOnLerp = true;
+            }
+            
+            //GameObject hookaim;
+            //hookaim=Instantiate(hookAmmo, hookObj.transform.position, hookObj.transform.rotation);
+            //hookaim.GetComponent<Rigidbody>().AddForce(transform.up * hookForce);
+            //rb.AddForce(transform.up * hookForce);
         }
-        
-        
+        if(turnOnLerp == true)
+        {
+            Player.transform.position = Vector3.Lerp(Player.transform.position, hookAmmo.transform.position, lerpSpeed);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "GrappableObject")
+        { 
+            
+        }
     }
 
     void HandleAimingPos()
