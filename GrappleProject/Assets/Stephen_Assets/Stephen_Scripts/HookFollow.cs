@@ -20,6 +20,8 @@ public class HookFollow : MonoBehaviour
 
     public GameObject AmmunitionTransform;
 
+    public Animator playerAnim;
+
     public float hookForce;
 
     public Animator hookAnim;
@@ -33,12 +35,18 @@ public class HookFollow : MonoBehaviour
         hookObj = GameObject.Find("Hook");
 
         hookAnim = hookObj.GetComponent<Animator>();
+
+        playerAnim = Player.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if(Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            hookAmmo.GetComponent<HookedScript>().playerSlide = true;
+        }
         
         if(Input.GetKey(KeyCode.E))
         {

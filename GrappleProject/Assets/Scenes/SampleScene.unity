@@ -788,6 +788,7 @@ GameObject:
   - component: {fileID: 1668356370}
   - component: {fileID: 1668356375}
   - component: {fileID: 1668356376}
+  - component: {fileID: 1668356377}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -923,6 +924,25 @@ MonoBehaviour:
   rb: {fileID: 1668356375}
   playerCollider: {fileID: 1668356371}
   player: {fileID: 1668356369}
+--- !u!95 &1668356377
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668356369}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 12da3c928602dc241b41e3951fbec6b5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1838177284
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +1009,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HookAmmunition
       objectReference: {fileID: 0}
+    - target: {fileID: 1263677116628251065, guid: 2da2908d65364a541b9bc7201aa65b80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5868886731764430027, guid: 2da2908d65364a541b9bc7201aa65b80,
         type: 3}
       propertyPath: hookObj
@@ -999,6 +1024,11 @@ PrefabInstance:
       propertyPath: AmmoTrans
       value: 
       objectReference: {fileID: 1838177284}
+    - target: {fileID: 5868886731764430027, guid: 2da2908d65364a541b9bc7201aa65b80,
+        type: 3}
+      propertyPath: playerRb
+      value: 
+      objectReference: {fileID: 1668356375}
     - target: {fileID: 6361303361587973200, guid: 2da2908d65364a541b9bc7201aa65b80,
         type: 3}
       propertyPath: m_IsKinematic
@@ -1079,7 +1109,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: -0.9188691
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2525154351863151541, guid: 2da2908d65364a541b9bc7201aa65b80, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2da2908d65364a541b9bc7201aa65b80, type: 3}
 --- !u!1 &1877766519
 GameObject:
@@ -1213,6 +1244,7 @@ MonoBehaviour:
   turnOnLerp: 0
   Player: {fileID: 1668356369}
   AmmunitionTransform: {fileID: 1838177284}
+  playerAnim: {fileID: 0}
   hookForce: 1000
   hookAnim: {fileID: 0}
   hookObj: {fileID: 0}
