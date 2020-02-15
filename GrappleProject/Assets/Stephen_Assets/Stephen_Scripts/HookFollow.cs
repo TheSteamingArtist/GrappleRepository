@@ -10,11 +10,17 @@ public class HookFollow : MonoBehaviour
 
     public bool hasCollided;
 
+    public bool turnOnLerp;
+
+    public bool grappleWait = true;
+
+    public bool BackwardsArchIdle;
+
     public float lerpSpeed;
 
-    public GameObject hookAmmo;
+    public float hookForce;
 
-    public bool turnOnLerp;
+    public GameObject hookAmmo;
 
     public GameObject Player;
 
@@ -22,15 +28,18 @@ public class HookFollow : MonoBehaviour
 
     public Animator playerAnim;
 
-    public float hookForce;
-
     public Animator hookAnim;
+
     [SerializeField] private GameObject hookObj;
-    public bool BackwardsArchIdle;
+
     public Vector3 lookPos;
-    // Start is called before the first frame update
+
+    private IEnumerator waitTimeCo;
+
     void Start()
     {
+
+        waitTimeCo = WaitTime(5f);
 
         hookObj = GameObject.Find("Hook");
 
@@ -50,20 +59,21 @@ public class HookFollow : MonoBehaviour
         
         if(Input.GetKey(KeyCode.E))
         {
-            hookAnim.SetBool("HookAnimBool", true);
+            TurnOnE();
             hookAnim.speed = 1;
         }
  
         else if (Input.GetKey(KeyCode.Q))
         {
-            hookAnim.SetBool("HookAnimBool", false);
+            TurnOnQ();
             hookAnim.speed = 1;
         }
         else if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-
-            if(hookAmmo.transform.parent != null)
+            if (grappleWait == true && hookAmmo.transform.parent != null)
             {
+                StartCoroutine(waitTimeCo);
+
                 hookAnim.speed = 0;
 
                 hookAmmoRb.isKinematic = false;
@@ -71,6 +81,8 @@ public class HookFollow : MonoBehaviour
                 hookAmmoRb.AddForce(transform.up * hookForce);
 
                 hookAmmo.transform.parent = null;
+
+                
             }
             else if(hasCollided == true)
             {
@@ -88,40 +100,6 @@ public class HookFollow : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "GrappableObject")
-        { 
-            
-        }
-    }
-
-    void HandleAimingPos()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            Vector3 lookP = hit.point;
-            lookP.z = transform.position.z;
-            lookPos = lookP;
-        }
-    }
-
-    void HandleRotation()
-    {
-        Vector3 directionToLook = lookPos - transform.position;
-        directionToLook.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToLook);
-
-
-        Debug.Log(lookPos.x + " " + transform.position.x);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15);
-    }
-
     public void TurnOnE()
     {
         hookAnim.SetBool("HookAnimBool", true);
@@ -130,12 +108,13 @@ public class HookFollow : MonoBehaviour
     {
         hookAnim.SetBool("HookAnimBool", false);
     }
-    public void BackToIdle()
+
+    public IEnumerator WaitTime(float waitTime)
     {
-        hookAnim.SetBool("BacktoIdle", true);
-    }
-    public void TurnOffQ()
-    {
-        hookAnim.SetBool("PressQ", false);
+        waitTime = 10f;
+        yield return new WaitForSeconds(waitTime);
+        grappleWait = false;
+        yield return new WaitForSeconds(waitTime);
+        grappleWait = true;
     }
 }
