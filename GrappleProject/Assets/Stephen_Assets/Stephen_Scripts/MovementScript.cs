@@ -10,11 +10,19 @@ public class MovementScript : MonoBehaviour
 
     public float jumpSpeed;
 
+    public int JumpCount = 0;
+
+    public int MaximumAmountOfJumps = 1;
+
     public Rigidbody rb;
 
     public Collider playerCollider;
 
     public GameObject player;
+
+    public int buttonPressLimit = 1;
+
+    public int buttonPressAdder;
 
     private bool isMovingLeft;
 
@@ -26,6 +34,9 @@ public class MovementScript : MonoBehaviour
 
     void Start()
     {
+
+        JumpCount = MaximumAmountOfJumps - 1;
+
         player = GameObject.Find("Player");
 
         playerCollider = player.GetComponent<Collider>();
@@ -39,9 +50,14 @@ public class MovementScript : MonoBehaviour
 
 
 
-        if (Input.GetKey(KeyCode.W))
+
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            isMovingUp = true;
+            if (JumpCount > 0)
+            {
+                rb.velocity = transform.up * 10;
+                JumpCount -= 1;
+            }
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -78,25 +94,19 @@ public class MovementScript : MonoBehaviour
 
         if (isMovingUp == true)
         {
-            rb.AddForce(Vector3.up * jumpSpeed);
-
-            isMovingUp = false;
+            rb.velocity = transform.up * 10;
+            JumpCount -= 1;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+     
+        if(collision.gameObject.tag == "Floor")
         {
-            isColliding = true;
+            JumpCount = JumpCount + 1;
         }
-    }
 
-    void OnCollisionExit(Collision jumpingHere)
-    {
-        if (jumpingHere.gameObject.tag == "Floor")
-        {
-            isColliding = false;
-        }
     }
 }
+

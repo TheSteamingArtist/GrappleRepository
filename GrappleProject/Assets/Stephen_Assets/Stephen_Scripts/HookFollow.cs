@@ -28,6 +28,10 @@ public class HookFollow : MonoBehaviour
 
     public Animator playerAnim;
 
+    public float cooldownTime = 2;
+
+    private float nextHookFired = 0;
+
     public Animator hookAnim;
 
     [SerializeField] private GameObject hookObj;
@@ -38,6 +42,7 @@ public class HookFollow : MonoBehaviour
 
     void Start()
     {
+
 
         waitTimeCo = WaitTime(5f);
 
@@ -52,6 +57,7 @@ public class HookFollow : MonoBehaviour
     void Update()
     {
 
+        
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             hookAmmo.GetComponent<HookedScript>().playerSlide = true;
@@ -70,10 +76,8 @@ public class HookFollow : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (grappleWait == true && hookAmmo.transform.parent != null)
+            if(Time.time > nextHookFired && hookAmmo.transform.parent != null)
             {
-                StartCoroutine(waitTimeCo);
-
                 hookAnim.speed = 0;
 
                 hookAmmoRb.isKinematic = false;
@@ -82,8 +86,9 @@ public class HookFollow : MonoBehaviour
 
                 hookAmmo.transform.parent = null;
 
-                
+                nextHookFired = Time.time + cooldownTime;
             }
+           
             else if(hasCollided == true)
             {
                 turnOnLerp = true;

@@ -449,6 +449,53 @@ Transform:
   m_Father: {fileID: 1668356374}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1270062735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270062737}
+  - component: {fileID: 1270062736}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1270062736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270062735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809cee79e60b79b4caaa2f59b9ff92f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnRandom: 0
+  randomNumber: 0
+  RandomInt: 0
+  coolDown: 0
+--- !u!4 &1270062737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270062735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5955615, y: 1.1913513, z: -0.2685286}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668356369
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668356369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.14, y: -0.11, z: -0.29}
+  m_LocalPosition: {x: 4.14, y: -0.27, z: -0.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
@@ -596,10 +643,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftSpeed: 2
   rightSpeed: 2
-  jumpSpeed: 40
+  jumpSpeed: 10
+  JumpCount: 0
+  MaximumAmountOfJumps: 1
   rb: {fileID: 1668356375}
   playerCollider: {fileID: 1668356371}
   player: {fileID: 1668356369}
+  buttonPressLimit: 1
+  buttonPressAdder: 0
 --- !u!95 &1668356377
 Animator:
   serializedVersion: 3
@@ -915,16 +966,18 @@ MonoBehaviour:
   rb: {fileID: 1877766524}
   hookAmmoRb: {fileID: 901035299}
   hasCollided: 0
-  lerpSpeed: 0.5
-  hookAmmo: {fileID: 901035296}
   turnOnLerp: 0
+  grappleWait: 1
+  BackwardsArchIdle: 0
+  lerpSpeed: 0.5
+  hookForce: 1000
+  hookAmmo: {fileID: 901035296}
   Player: {fileID: 1668356369}
   AmmunitionTransform: {fileID: 1838177284}
   playerAnim: {fileID: 0}
-  hookForce: 1000
+  cooldownTime: 2
   hookAnim: {fileID: 0}
   hookObj: {fileID: 0}
-  BackwardsArchIdle: 0
   lookPos: {x: 0, y: 0, z: 0}
 --- !u!95 &1877766527
 Animator:
@@ -1004,7 +1057,7 @@ GameObject:
   - component: {fileID: 1981550544}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
