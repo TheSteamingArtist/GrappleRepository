@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class HookFollow : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip grappleSound;
+    [Range(0.0f, 1.0f)]
+    public float grappleVolume;
     public Rigidbody rb;
 
     public Rigidbody hookAmmoRb;
@@ -55,6 +59,7 @@ public class HookFollow : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             hookAmmo.GetComponent<HookedScript>().playerSlide = true;
+            audioSource.PlayOneShot(grappleSound, grappleVolume);
         }
         
         if(Input.GetKey(KeyCode.E))
